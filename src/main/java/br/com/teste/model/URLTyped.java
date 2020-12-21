@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -17,6 +18,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "url_typed")
 @AllArgsConstructor
+@NoArgsConstructor
 public class URLTyped {
 
 	@Id

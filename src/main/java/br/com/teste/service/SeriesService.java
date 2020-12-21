@@ -11,6 +11,8 @@ import org.springframework.util.CollectionUtils;
 import br.com.teste.model.Series;
 import br.com.teste.repository.SeriesRepository;
 import br.com.teste.resource.dto.SeriesDTO;
+import br.com.teste.service.parse.DTOParser;
+import br.com.teste.service.parse.SeriesDTOParser;
 
 @Service
 public class SeriesService {
@@ -18,11 +20,13 @@ public class SeriesService {
 	@Autowired
 	private SeriesRepository repository;
 	
+	@Autowired
+	private SeriesDTOParser seriesParser;
+	
 	public SeriesDTO findIOne(Long id) {
 		Series series = repository.findById(id).orElseThrow(
 				()-> new MarvelObjectNotFound("Series id "+ id + " nao encontrado"));
-		DTOParser dtoParser = new DTOParser();
-		SeriesDTO dto = dtoParser.parseSeries(series);
+		SeriesDTO dto = seriesParser.parseSeries(series);
 		return dto;
 	}
 	
@@ -34,7 +38,7 @@ public class SeriesService {
 		
 		DTOParser parser = new DTOParser();
 		return series.stream()
-			.map(comic -> parser.parseSeries(comic))
+			.map(comic -> seriesParser.parseSeries(comic))
 			.collect(Collectors.toList());
 	}
 	

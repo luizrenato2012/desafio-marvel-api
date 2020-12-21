@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.teste.model.Character;
 import br.com.teste.resource.dto.CharacterDTO;
 import br.com.teste.resource.dto.ComicDTO;
 import br.com.teste.resource.dto.SeriesDTO;
@@ -54,5 +57,10 @@ public class CharacterController {
 		return ResponseEntity.ok(series);
 	}
 	
+	@PostMapping
+	public ResponseEntity<Character> insertCharacter(@RequestBody Character character ) {
+		Character salvo = characterService.insert(character);
+		return ResponseEntity.ok(salvo);
+	}
 	
 }

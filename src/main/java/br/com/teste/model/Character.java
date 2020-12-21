@@ -35,8 +35,6 @@ public class Character implements LongStringObject{
 	@JoinColumn(name = "id_thumbnail")
 	private Thumbnail thumbnail;
 	
-	
-	//TODO rever estratégia de mapeamento 
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinTable(name = "character_comic", 
 				joinColumns = @JoinColumn(name="id_character"), 
@@ -48,6 +46,12 @@ public class Character implements LongStringObject{
 				joinColumns = @JoinColumn(name="id_character"), 
 				inverseJoinColumns = @JoinColumn(name="id_series"))
 	private List<Series> series;
+	
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinTable(name = "character_events", 
+				joinColumns = @JoinColumn(name="id_character"), 
+				inverseJoinColumns = @JoinColumn(name="id_event"))
+	private List<Event> event;
 	
 	@Override
 	public Long longValue() {

@@ -15,6 +15,8 @@ import br.com.teste.resource.CharacterController;
 import br.com.teste.resource.dto.ComicDTO;
 import br.com.teste.resource.dto.ItemDTO;
 import br.com.teste.resource.dto.ListItemsDTO;
+import br.com.teste.service.parse.ComicDTOParser;
+import br.com.teste.service.parse.DTOParser;
 
 @Service
 public class ComicService {
@@ -22,11 +24,14 @@ public class ComicService {
 	@Autowired
 	private ComicRepository repository;
 	
+	@Autowired
+	private ComicDTOParser comicDtoParser;
+	
 	public ComicDTO findOne(Long id) {
 		Comic comic = repository.findById(id).orElseThrow(
 				()-> new MarvelObjectNotFound("Comic id "+ id + " nao encontrado"));
 		DTOParser dtoParser = new DTOParser();
-		ComicDTO dto = dtoParser.parseComic(comic);
+		ComicDTO dto = comicDtoParser.parseComic(comic);
 		return dto;
 	}
 	
@@ -38,7 +43,7 @@ public class ComicService {
 		
 		DTOParser parser = new DTOParser();
 		return comics.stream()
-			.map(comic -> parser.parseComic(comic))
+			.map(comic -> comicDtoParser.parseComic(comic))
 			.collect(Collectors.toList());
 	}
 

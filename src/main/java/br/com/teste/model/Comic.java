@@ -34,14 +34,23 @@ public class Comic extends ArtWork{
 	
 	private Integer pageCount;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<URLTyped> urls;
+	
 	@EqualsAndHashCode.Exclude
 	@ManyToMany(mappedBy = "comics", fetch = FetchType.LAZY)
 	private List<Character> characters;
 	
+	@EqualsAndHashCode.Exclude
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<Thumbnail>images;
 	
-//	private List<Series> series;
+	@ManyToMany(mappedBy = "comics", fetch = FetchType.LAZY)
+	private List<Series> series;
+	
+	@ManyToMany(mappedBy = "comics", fetch = FetchType.LAZY)
+	private List<Event> events;
+	
 //	private List<Author> creators;
 //	private List<Story> stories;
 //	private List<Event> events;

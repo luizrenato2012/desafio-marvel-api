@@ -8,13 +8,12 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.ManyToAny;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,19 +34,30 @@ public class Series extends ArtWork{
 	@Enumerated(EnumType.STRING)
 	private TypeSeries type;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@EqualsAndHashCode.Exclude
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="id_thumbnail")
 	private Thumbnail thumbnail;
 	
 //	creators
-	@EqualsAndHashCode.Exclude
-	@ManyToMany(fetch = FetchType.LAZY)
 	
+	@EqualsAndHashCode.Exclude
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "series")
 	private List<Character> characters;
+
 //	stories
-//	comics
-//	events
+	
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinTable(name = "series_comic", 
+				joinColumns = @JoinColumn(name="id_series"), 
+				inverseJoinColumns = @JoinColumn(name="id_comic"))
+	private List<Comic> comics;
+
+	@EqualsAndHashCode.Exclude
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "series")
+	private List<Event> events;
+	
+	
 //	next
 //	previous
 	

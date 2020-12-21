@@ -29,5 +29,8 @@ public class SeriesDTO {
 	private String type;
 	
 	private ThumbnailDTO thumbnail;
+	private ListItemsDTO characters;
+	private ListItemsDTO comics;
+	
 }
 

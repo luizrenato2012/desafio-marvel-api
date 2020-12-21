@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 import br.com.teste.model.Character;
 import br.com.teste.repository.CharacterRepository;
 import br.com.teste.resource.dto.CharacterDTO;
+import br.com.teste.service.parse.CharacterDTOParser;
 
 @Service
 public class CharacterService {
 
 	@Autowired
 	private CharacterRepository repository;
+	
+	@Autowired
+	private CharacterDTOParser characterDTOParser;
 	
 	public br.com.teste.model.Character insert(br.com.teste.model.Character character) {
 		character.setModified(LocalDateTime.now());
@@ -25,14 +29,14 @@ public class CharacterService {
 	public List<CharacterDTO> listAll() {
 		List<Character> characters = repository.findAll();
 		return characters.stream()
-			.map(character -> new DTOParser().parseCharacter(character))
+			.map(character -> characterDTOParser.parseCharacter(character))
 			.collect(Collectors.toList());
 	}
 	
 	public CharacterDTO findOne(long id) {
 		Character character = repository.findById(id).orElseThrow(
 				()-> new MarvelObjectNotFound("Character id ["+ id +" nao encontrado"));
-		return new DTOParser().parseCharacter(character);
+		return characterDTOParser.parseCharacter(character);
 	}
 	
 }
