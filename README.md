@@ -1,20 +1,22 @@
 # Desafio API Marvel
 
-## Intruções:
-*Clonar o repositório através do comando 'git clone https://github.com/luizrenato2012/desafio-marvel-api.git' .
--* No diretório criado executar os comandos:
-  'mvnw install'
-  'java -jar target/mavel-api-desafio-0.0.1-SNAPSHOT.jar'
-* Com a aplicação executando, abra o navegador no endereço 'http://localhost:8080/v1/public/characters' que mostrar os personagens cadastrados e a partir do json gerado, obtenha os links para 'comics', 'series', 'stories' e 'events'.
+## Instruções para Execução:
+* Clonar o repositório através do comando ```git clone https://github.com/luizrenato2012/desafio-marvel-api.git```.
+* No diretório criado executar os comandos:
+  ```
+  mvnw install
+  java -jar target/mavel-api-desafio-0.0.1-SNAPSHOT.jar
+  ```
+* Com a aplicação executando, abra o navegador no endereço 'http://localhost:8080/v1/public/characters' que mostrará os personagens cadastrados e a partir do json gerado, obtenha os links para 'comics', 'series', 'stories' e 'events'.
 
 ## Endpoints
 Os seguintes endpoint's estão disponíveis:
-*/v1/public/characters
-*/v1/public/characters/{characterId}
-*/v1/public/characters/{characterId}/comics
-*/v1/public/characters/{characterId}/events
-*/v1/public/characters/{characterId}/series
-*/v1/public/characters/{characterId}/stories
+* /v1/public/characters
+* /v1/public/characters/{characterId}
+* /v1/public/characters/{characterId}/comics
+* /v1/public/characters/{characterId}/events
+* /v1/public/characters/{characterId}/series
+* /v1/public/characters/{characterId}/stories
 
 ## Banco de Dados:
 - O banco de dados do projeto é o H2 em arquivo, o que dispensa a instalação de gerenciador de banco.
