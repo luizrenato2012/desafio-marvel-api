@@ -39,13 +39,15 @@ public class Series extends ArtWork{
 	@JoinColumn(name="id_thumbnail")
 	private Thumbnail thumbnail;
 	
-//	creators
-	
 	@EqualsAndHashCode.Exclude
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "series")
 	private List<Character> characters;
 
-//	stories
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinTable(name = "series_story", 
+				joinColumns = @JoinColumn(name="id_series"), 
+				inverseJoinColumns = @JoinColumn(name="id_story"))
+	private List<Story> stories;
 	
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinTable(name = "series_comic", 
@@ -57,9 +59,6 @@ public class Series extends ArtWork{
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "series")
 	private List<Event> events;
 	
-	
-//	next
-//	previous
 	
 	
 	

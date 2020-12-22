@@ -15,4 +15,6 @@ public class CharacterDTO {
 	private String resourceURI;
 	private ListItemsDTO comics;
 	private ListItemsDTO series;
+	private ListItemsDTO events;
+	private ListItemsDTO stories;
 }

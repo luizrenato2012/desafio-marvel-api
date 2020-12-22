@@ -18,20 +18,20 @@ import br.com.teste.service.parse.SeriesDTOParser;
 public class SeriesService {
 
 	@Autowired
-	private SeriesRepository repository;
+	private SeriesRepository seriesRepository;
 	
 	@Autowired
 	private SeriesDTOParser seriesParser;
 	
 	public SeriesDTO findIOne(Long id) {
-		Series series = repository.findById(id).orElseThrow(
-				()-> new MarvelObjectNotFound("Series id "+ id + " nao encontrado"));
+		Series series = seriesRepository.findById(id).orElseThrow(
+				()-> new MarvelObjectNotFound("Series id ["+ id + "] nao encontrado"));
 		SeriesDTO dto = seriesParser.parseSeries(series);
 		return dto;
 	}
 	
 	public List<SeriesDTO> listByCharacter(Long idCharacter) {
-		List<Series> series = repository.listByCharactersId(idCharacter);
+		List<Series> series = seriesRepository.listByCharactersId(idCharacter);
 		if (CollectionUtils.isEmpty(series)) {
 			new ArrayList<>();
 		}
@@ -43,6 +43,6 @@ public class SeriesService {
 	}
 	
 	public Series insert(Series series) {
-		return repository.save(series);
+		return seriesRepository.save(series);
 	}
 }

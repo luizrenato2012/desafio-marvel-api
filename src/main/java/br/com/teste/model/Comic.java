@@ -51,9 +51,11 @@ public class Comic extends ArtWork{
 	@ManyToMany(mappedBy = "comics", fetch = FetchType.LAZY)
 	private List<Event> events;
 	
-//	private List<Author> creators;
-//	private List<Story> stories;
-//	private List<Event> events;
+	@ManyToMany(mappedBy = "comics", fetch = FetchType.LAZY)
+	private List<Story> stories;
+	
+//	TODO STORIES private List<Story> stories;
+//	TODO EVENTS private List<Event> events;
 	
 
 }

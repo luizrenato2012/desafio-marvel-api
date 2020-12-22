@@ -27,4 +27,6 @@ public class ComicDTO {
 	private ListItemsDTO series;
 	private List<ThumbnailDTO> images;
 	private ListItemsDTO characters;
+	private ListItemsDTO stories;
+	private ListItemsDTO events;
 }

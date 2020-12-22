@@ -16,26 +16,26 @@ import br.com.teste.service.parse.CharacterDTOParser;
 public class CharacterService {
 
 	@Autowired
-	private CharacterRepository repository;
+	private CharacterRepository characterRepository;
 	
 	@Autowired
 	private CharacterDTOParser characterDTOParser;
 	
 	public br.com.teste.model.Character insert(br.com.teste.model.Character character) {
 		character.setModified(LocalDateTime.now());
-		return repository.save(character);
+		return characterRepository.save(character);
 	}
 	
 	public List<CharacterDTO> listAll() {
-		List<Character> characters = repository.findAll();
+		List<Character> characters = characterRepository.findAll();
 		return characters.stream()
 			.map(character -> characterDTOParser.parseCharacter(character))
 			.collect(Collectors.toList());
 	}
 	
 	public CharacterDTO findOne(long id) {
-		Character character = repository.findById(id).orElseThrow(
-				()-> new MarvelObjectNotFound("Character id ["+ id +" nao encontrado"));
+		Character character = characterRepository.findById(id).orElseThrow(
+				()-> new MarvelObjectNotFound("Character id ["+ id +"] nao encontrado"));
 		return characterDTOParser.parseCharacter(character);
 	}
 	

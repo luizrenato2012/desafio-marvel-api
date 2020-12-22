@@ -22,21 +22,21 @@ import br.com.teste.service.parse.DTOParser;
 public class ComicService {
 
 	@Autowired
-	private ComicRepository repository;
+	private ComicRepository comicRepository;
 	
 	@Autowired
 	private ComicDTOParser comicDtoParser;
 	
 	public ComicDTO findOne(Long id) {
-		Comic comic = repository.findById(id).orElseThrow(
-				()-> new MarvelObjectNotFound("Comic id "+ id + " nao encontrado"));
+		Comic comic = comicRepository.findById(id).orElseThrow(
+				()-> new MarvelObjectNotFound("Comic id ["+ id + "] nao encontrado"));
 		DTOParser dtoParser = new DTOParser();
 		ComicDTO dto = comicDtoParser.parseComic(comic);
 		return dto;
 	}
 	
 	public List<ComicDTO> listByCharacter(Long idCharacter) {
-		List<Comic> comics = repository.listByCharactersId(idCharacter);
+		List<Comic> comics = comicRepository.listByCharactersId(idCharacter);
 		if (CollectionUtils.isEmpty(comics)) {
 			new ArrayList<>();
 		}
@@ -49,6 +49,6 @@ public class ComicService {
 
 	public Comic insert(Comic comic) {
 		comic.setModified(LocalDateTime.now());
-		return repository.save(comic);
+		return comicRepository.save(comic);
 	}
 }

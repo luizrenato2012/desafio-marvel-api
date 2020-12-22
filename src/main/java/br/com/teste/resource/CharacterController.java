@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.teste.model.Character;
 import br.com.teste.resource.dto.CharacterDTO;
 import br.com.teste.resource.dto.ComicDTO;
+import br.com.teste.resource.dto.EventDTO;
 import br.com.teste.resource.dto.SeriesDTO;
+import br.com.teste.resource.dto.StoryDTO;
 import br.com.teste.service.CharacterService;
 import br.com.teste.service.ComicService;
+import br.com.teste.service.EventService;
 import br.com.teste.service.SeriesService;
+import br.com.teste.service.StoryService;
 
 @RestController
 @RequestMapping("/characters")
@@ -31,6 +35,12 @@ public class CharacterController {
 	
 	@Autowired
 	private SeriesService seriesService;
+	
+	@Autowired
+	private EventService eventService;
+
+	@Autowired
+	private StoryService storyService;
 	
 	@GetMapping
 	public ResponseEntity<List<CharacterDTO>> listAllCharacters() {
@@ -55,6 +65,18 @@ public class CharacterController {
 	public ResponseEntity<List<SeriesDTO>> findSeriesByCharacter(@PathVariable Long id) {
 		List<SeriesDTO> series = seriesService.listByCharacter(id);
 		return ResponseEntity.ok(series);
+	}
+	
+	@GetMapping("/{id}/events")
+	public ResponseEntity<List<EventDTO>> findEventsByCharacter(@PathVariable Long id) {
+		List<EventDTO> series = eventService.listByCharacter(id);
+		return ResponseEntity.ok(series);
+	}
+	
+	@GetMapping("/{id}/stories")
+	public ResponseEntity<List<StoryDTO>> findStoriesByCharacter(@PathVariable Long id) {
+		List<StoryDTO> stories = storyService.listByCharacter(id);
+		return ResponseEntity.ok(stories);
 	}
 	
 	@PostMapping

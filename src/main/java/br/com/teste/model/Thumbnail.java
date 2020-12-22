@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,12 +23,13 @@ public class Thumbnail {
 
 	@JsonIgnore
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(length = 200)
+	@NotNull
+	@Column(length = 200, name = "path_file")
 	private String path;
 	
+	@NotNull
 	@Column(length = 5)
 	private String extension;
 

@@ -19,21 +19,21 @@ import br.com.teste.service.parse.EventDTOParser;
 public class EventService {
 
 	@Autowired
-	private EventRepository repository;
+	private EventRepository eventRepository;
 	
 	@Autowired
 	private EventDTOParser eventDtoParser;
 	
 	public EventDTO findOne(Long id) {
-		Event event = repository.findById(id).orElseThrow(
-				()-> new MarvelObjectNotFound("Event id "+ id + " nao encontrado"));
+		Event event = eventRepository.findById(id).orElseThrow(
+				()-> new MarvelObjectNotFound("Event id ["+ id + "] nao encontrado"));
 		DTOParser dtoParser = new DTOParser();
 		EventDTO dto = eventDtoParser.parseEvent(event);
 		return dto;
 	}
 	
 	public List<EventDTO> listByCharacter(Long idCharacter) {
-		List<Event> events = repository.listByCharactersId(idCharacter);
+		List<Event> events = eventRepository.listByCharactersId(idCharacter);
 		if (CollectionUtils.isEmpty(events)) {
 			new ArrayList<>();
 		}
@@ -46,6 +46,6 @@ public class EventService {
 
 	public Event insert(Event event) {
 		event.setModified(LocalDateTime.now());
-		return repository.save(event);
+		return eventRepository.save(event);
 	}
 }

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 import br.com.teste.model.Comic;
 import br.com.teste.resource.CharacterController;
 import br.com.teste.resource.ComicController;
+import br.com.teste.resource.EventController;
 import br.com.teste.resource.SeriesController;
+import br.com.teste.resource.StoryController;
 import br.com.teste.resource.dto.ComicDTO;
 import br.com.teste.resource.dto.ItemDTO;
 import br.com.teste.resource.dto.ListItemsDTO;
@@ -28,13 +30,15 @@ public class ComicDTOParser {
 		dto.setResourceURI(WebMvcLinkBuilder.linkTo(ComicController.class)
 				.slash(id)
 				.withSelfRel().toUri().toString());
-		BeanUtils.copyProperties(comic, dto, "images", "characters", "urls", "series");
+		BeanUtils.copyProperties(comic, dto, "images", "characters", "urls", "series", "stories","events");
 		dto.setImages(dtoParser.parseImages(comic.getImages()));
 		ListItemsDTO listItems = dtoParser.parseItems(comic.getCharacters(), id, 
 				CharacterController.class, "comics");
 		dto.setCharacters(listItems);
 		dto.setUrls(dtoParser.getURLsDTO(comic.getUrls()));
 		dto.setSeries(dtoParser.parseItems(comic.getSeries(), comic.getId(), SeriesController.class, "series"));
+		dto.setStories(dtoParser.parseItems(comic.getStories(), comic.getId(), StoryController.class, "stories"));
+		dto.setEvents(dtoParser.parseItems(comic.getEvents(), comic.getId(), EventController.class, "events"));
 		return dto;
 	}
 

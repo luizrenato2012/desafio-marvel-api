@@ -12,6 +12,6 @@ import br.com.teste.model.Event;
 public interface EventRepository extends JpaRepository<Event, Long>{
 
 	@Query("select event from Event event join fetch event.characters ch where ch.id = :id")
-	List<Event> listByCharactersId(Long idCharacter);
+	List<Event> listByCharactersId(Long id);
 
 }

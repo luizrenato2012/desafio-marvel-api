@@ -22,6 +22,7 @@ public class EventDTO {
 	private ThumbnailDTO thumbnail;
 	
 	private ListItemsDTO characters;
+	private ListItemsDTO stories;
 	private ListItemsDTO comics;
 	private ListItemsDTO series;
 

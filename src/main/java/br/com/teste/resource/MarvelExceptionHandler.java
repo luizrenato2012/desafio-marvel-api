@@ -3,6 +3,7 @@ package br.com.teste.resource;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,9 +18,12 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -42,76 +46,49 @@ public class MarvelExceptionHandler extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(MarvelObjectNotFound.class)
 	public ResponseEntity<Object> handleMarvelObjectNotFound(MarvelObjectNotFound ex,
 			WebRequest request) {
-		
-		MessageError error = new MessageError(HttpStatus.NOT_FOUND.value(), ex.getMessage());	
-		return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+		return handleGenericErrors(ex,request);
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		System.out.println(" handleHttpRequestMethodNotSupported");
-		return super.handleHttpRequestMethodNotSupported(ex, headers, status, request);
-	}
-
-	@Override
-	protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		System.out.println(" handleHttpMediaTypeNotSupported");
-		return super.handleHttpMediaTypeNotSupported(ex, headers, status, request);
-	}
-
-	@Override
-	protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		System.out.println(" handleHttpMediaTypeNotAcceptable");
-		return super.handleHttpMediaTypeNotAcceptable(ex, headers, status, request);
+		return handleGenericErrors(ex,request);
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleMissingPathVariable(MissingPathVariableException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
-		ex.printStackTrace();
-		System.out.println(" handleMissingPathVariable");
-		return super.handleMissingPathVariable(ex, headers, status, request);
-	}
-
-	@Override
-	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
-			HttpStatus status, WebRequest request) {
-		System.out.println(" handleTypeMismatch");
-		return super.handleTypeMismatch(ex, headers, status, request);
+		return handleGenericErrors(ex,request);
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		System.out.println(" handleHttpMessageNotWritable");
-		return super.handleHttpMessageNotWritable(ex, headers, status, request);
+		return handleGenericErrors(ex,request);
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		System.out.println(" handleMethodArgumentNotValid");
-		return super.handleMethodArgumentNotValid(ex, headers, status, request);
+		return handleGenericErrors(ex,request);
 	}
 
 	@Override
-	protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status,
-			WebRequest request) {
-		System.out.println(" handleBindException");
-		return super.handleBindException(ex, headers, status, request);
+	protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		return handleGenericErrors(ex,request);
 	}
 
 	@Override
-	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
-			HttpStatus status, WebRequest request) {
-		System.out.println(" handleNoHandlerFoundException");
-		return super.handleNoHandlerFoundException(ex, headers, status, request);
+	protected ResponseEntity<Object> handleMissingServletRequestPart(MissingServletRequestPartException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		return handleGenericErrors(ex,request);
 	}
-	
-	
+
+	private ResponseEntity<Object> handleGenericErrors(Exception ex, WebRequest request) {
+		MessageError error = new MessageError(HttpStatus.NOT_FOUND.value(), ex.getMessage());	
+		return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
 	
 }
 
